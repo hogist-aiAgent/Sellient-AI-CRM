@@ -1,14 +1,21 @@
-# Ignore Python cache and virtual env
+# Python cache and compiled files
 __pycache__/
 *.py[cod]
-*.sqlite3
-.venv/
 
-# Ignore environment variables and secrets
+# Virtual environment
+.venv/
+env/
+
+# Environment variables
 .env
 
-# Ignore Jupyter notebooks checkpoints
+# Jupyter Notebooks checkpoints
 .ipynb_checkpoints/
 
 # VS Code settings
 .vscode/
+
+# Database (if you export or store credentials in files)
+*.sql
+*.dump
+*.mysql
