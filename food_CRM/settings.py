@@ -13,11 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-#from corsheaders.defaults import default_headers
 
-#CORS_ALLOW_HEADERS = list(default_headers) + [
-    #"x-api-key",
-#]
 
 load_dotenv()
 
@@ -36,13 +32,6 @@ SECRET_KEY = 'django-insecure-0b96h$lz@)vm^ljdlad!g0&oc)2^*ux*^0pdllu-xv0q74p!ce
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
-#ALLOWED_HOSTS = [
-    #"localhost",
-    #"127.0.0.1",
-    #"6d05-49-204-118-99.ngrok-free.app"
-    #os.getenv("NGROK_URL", "6d05-49-204-118-99.ngrok-free.app"),  # ✅ Add your new ngrok URL
-#]
-
 ALLOWED_HOSTS =['*']
 
 
@@ -53,6 +42,13 @@ TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER", "+16012285963")
 
 VAPI_API_KEY = os.getenv('VAPI_API_KEY')
 VAPI_ASSISTANT_ID = os.getenv('VAPI_ASSISTANT_ID')
+
+ULTRAMSG_INSTANCE_ID = os.getenv('ULTRAMSG_INSTANCE_ID')
+ULTRAMSG_TOKEN = os.getenv('ULTRAMSG_TOKEN')
+SALES_WHATSAPP_NUMBERS = [
+    "+918122889884", 
+    "+919962228985", # Add more if needed
+]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -89,7 +85,8 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "https://hogist-crm.netlify.app",
     "http://localhost:5173",
-    "https://f30b-49-204-133-60.ngrok-free.app",
+    "https://hogist.com",
+    
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -111,7 +108,7 @@ CSRF_COOKIE_HTTPONLY = False
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",  # Vite/React dev server
-    "https://262e-49-204-117-28.ngrok-free.app",
+    "https://hogist.com",
 ]
 
 ROOT_URLCONF = 'food_CRM.urls'

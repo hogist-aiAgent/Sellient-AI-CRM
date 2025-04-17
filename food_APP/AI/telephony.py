@@ -12,7 +12,7 @@ def make_call(customer_phone, lead_id):
     try:
         client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
-        twiml_url = f" https://fe50-49-204-118-43.ngrok-free.app/twiml/{lead_id}/?ngrok-skip-browser-warning=true"  # ✅ TwiML endpoint
+        twiml_url = f" https://hogist.com/twiml/{lead_id}/?ngrok-skip-browser-warning=true"  # ✅ TwiML endpoint
 
         call = client.calls.create(
             to=customer_phone,

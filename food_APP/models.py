@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from .utils import send_whatsapp_message
 
 #Make leads
 class OutsorceDBLead(models.Model):
@@ -132,6 +133,21 @@ class B2BLead(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     call_id = models.CharField(max_length=255,unique=True)
 
+    def save(self, *args, **kwargs):
+        print("🧪 B2BLead save() triggered")
+        old_status = None
+        if self.pk:
+            old_status = B2BLead.objects.get(pk=self.pk).lead_status
+        super().save(*args, **kwargs)
+
+        print(f"🧪 Old status: {old_status} → New status: {self.lead_status}")
+
+
+        if self.lead_status == "warm" and old_status != "warm":
+            print("🔥 Lead status changed to warm — triggering WhatsApp!")
+            from .utils import send_whatsapp_message
+            send_whatsapp_message(self, source="B2BLead")
+
 
     def __str__(self):
         return self.name
@@ -188,6 +204,16 @@ class B2CLead(models.Model):
     lead_generater_name = models.ForeignKey(InpersonLead, on_delete=models.SET_NULL,null=True, blank=True,related_name="b2c_generated_by")
     created_at = models.DateTimeField(auto_now_add=True)
     call_id = models.CharField(max_length=255, unique=True)
+
+    def save(self, *args, **kwargs):
+        old_status = None
+        if self.pk:
+            old_status = B2BLead.objects.get(pk=self.pk).lead_status
+        super().save(*args, **kwargs)
+
+        if self.lead_status == "warm" and old_status != "warm":
+            send_whatsapp_message(self, source="B2CLead")
+
 
 
     def __str__(self):
